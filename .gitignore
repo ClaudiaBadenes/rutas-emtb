@@ -1,0 +1,25 @@
+node_modules/
+dist/
+.venv/
+.env.local
+.env.*.local
+
+# Datos descargados y generados en local (no se publican)
+/data/
+public/data/seed-trails.json
+
+# Motores de rutas: binarios y mapas (se descargan aparte)
+brouter/dist/
+brouter/segments4/
+brouter/customprofiles/
+brouter/profiles/emtb_*.brf
+engine/jdk/
+engine/data/
+engine/graph-cache/
+engine/logs/
+engine/*.jar
+
+.DS_Store
+
+# Configuración local de herramientas
+.claude/

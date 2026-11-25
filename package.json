@@ -1,0 +1,36 @@
+{
+  "name": "ebike-rutas",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "brouter": "bash brouter/start.sh",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "preview:local": "vite build --mode local-preview && vite preview",
+    "sync:trailforks": "node scripts/sync-trailforks.mjs 39.676 -0.302 40",
+    "build:trail-geometry": "python3 -m venv .venv && .venv/bin/pip install -q osmium && .venv/bin/python scripts/build_trail_geometry.py",
+    "typecheck": "tsc --noEmit",
+    "legacy:server": "tsx watch server/index.ts",
+    "legacy:engine": "bash engine/start.sh",
+    "build:seed": "node scripts/build-seed.mjs"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.13.7",
+    "hono": "^4.6.14",
+    "maplibre-gl": "^4.7.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "concurrently": "^9.1.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.3"
+  }
+}

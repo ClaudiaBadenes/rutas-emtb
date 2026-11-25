@@ -1,0 +1,52 @@
+graphhopper:
+  datareader.file: data/valencia-latest.osm.pbf
+  graph.location: graph-cache
+
+  # Datos que GraphHopper guarda por tramo y que usamos en los modelos de coste
+  graph.encoded_values: mtb_priority, mtb_access, roundabout, mtb_average_speed, bike_road_access, average_slope, max_slope, mtb_rating, hike_rating, country, road_class, surface, track_type, smoothness
+
+  # Altimetría (SRTM, se descarga sola durante la importación)
+  graph.elevation.provider: srtm
+  graph.elevation.cache_dir: data/srtm
+  graph.elevation.dataaccess: RAM_STORE
+  graph.elevation.interpolate: bilinear
+  graph.elevation.edge_smoothing: moving_average
+  graph.elevation.edge_smoothing.moving_average.window_size: 150
+  graph.elevation.long_edge_sampling_distance: 60
+  graph.elevation.way_point_max_distance: 10
+
+  profiles:
+    - name: emtb
+      custom_model_files: [emtb.json]
+
+  # Sin CH: necesitamos modelos de coste distintos en cada petición (tipo de ruta, zonas)
+  profiles_ch: []
+  profiles_lm:
+    - profile: emtb
+
+  custom_models.directory: custom_models
+  prepare.min_network_size: 200
+  prepare.subnetworks.threads: 1
+  routing.non_ch.max_waypoint_distance: 1000000
+  routing.max_visited_nodes: 3000000
+  import.osm.ignored_highways: motorway, trunk
+  graph.dataaccess.default_type: RAM_STORE
+
+server:
+  application_connectors:
+    - type: http
+      port: 8989
+      bind_host: localhost
+      max_request_header_size: 50k
+  request_log:
+    appenders: []
+  admin_connectors:
+    - type: http
+      port: 8990
+      bind_host: localhost
+
+logging:
+  appenders:
+    - type: console
+      time_zone: UTC
+      log_format: "%d{HH:mm:ss.SSS} %-5level %logger{36} - %msg%n"
